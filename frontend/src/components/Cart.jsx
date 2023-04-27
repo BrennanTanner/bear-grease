@@ -16,8 +16,6 @@ const data = [
 ];
 
 function Cart() {
-   console.log('here');
-
    const [open, setOpen] = useState(false);
    const getList = () => (
       <Container style={{ width: 250 }} onClick={() => setOpen(false)}>
