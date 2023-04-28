@@ -13,15 +13,15 @@ import './App.css';
 
 const router = createBrowserRouter([
    {
+      path: '/',
+      element: <Home />,
+      errorElement: <p>Oops! Something Went Wrong</p>,
+   },
+   {
       path: '/catalog',
       element: <Catalog />,
       errorElement: <ErrorBoundary/>,
       loader: getCatalog,
-   },
-   {
-      path: '/home',
-      element: <Home />,
-      errorElement: <p>Oops! Something Went Wrong</p>,
    },
    {
       path: '/login',
