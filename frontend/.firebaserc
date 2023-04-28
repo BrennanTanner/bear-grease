@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "bear-grease/frontend"
+    "default": "/frontend"
   }
 }
