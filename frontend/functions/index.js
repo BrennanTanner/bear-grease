@@ -34,23 +34,26 @@ exports.catalog = functions.https.onRequest(async (req, res) => {
 
 // Gets items by category
 exports.category = functions.https.onRequest(async (req, res) => {
-  const headersList = {
-     Accept: '*/*',
-     Authorization: `Bearer ${printfulApi.value()}`,
-  };
+   const headersList = {
+      Accept: '*/*',
+      Authorization: `Bearer ${printfulApi.value()}`,
+   };
 
-  await fetch(`https://api.printful.com/store/products?category_id=${req.params[0]}`, {
-     method: 'GET',
-     headers: headersList,
-  })
-     .then((resp) => {
-        if (resp.status >= 200 && resp.status <= 300) {
-           return Promise.resolve(resp.json());
-        }
-     })
-     .then((data) => {
-        res.json(data);
-     });
+   await fetch(
+      `https://api.printful.com/store/products?category_id=${req.params[0]}`,
+      {
+         method: 'GET',
+         headers: headersList,
+      },
+   )
+      .then((resp) => {
+         if (resp.status >= 200 && resp.status <= 300) {
+            return Promise.resolve(resp.json());
+         }
+      })
+      .then((data) => {
+         res.json(data);
+      });
 });
 
 // Gets all printful categories
@@ -97,21 +100,56 @@ exports.product = functions.https.onRequest(async (req, res) => {
 
 // Gets product information
 exports.productTest = functions.https.onRequest(async (req, res) => {
-  const headersList = {
-     Accept: '*/*',
-     Authorization: `Bearer ${printfulApi.value()}`,
-  };
+   const headersList = {
+      Accept: '*/*',
+      Authorization: `Bearer ${printfulApi.value()}`,
+   };
 
-  await fetch(`https://api.printful.com/store/products/306499346`, {
-     method: 'GET',
-     headers: headersList,
-  })
-     .then((resp) => {
-        if (resp.status >= 200 && resp.status <= 300) {
-           return Promise.resolve(resp.json());
-        }
-     })
-     .then((data) => {
-        res.json(data);
-     });
+   await fetch(`https://api.printful.com/store/products/306499346`, {
+      method: 'GET',
+      headers: headersList,
+   })
+      .then((resp) => {
+         if (resp.status >= 200 && resp.status <= 300) {
+            return Promise.resolve(resp.json());
+         }
+      })
+      .then((data) => {
+         res.json(data);
+      });
+});
+
+// place a new order
+exports.order = functions.https.onRequest(async (req, res) => {
+   const headersList = {
+      'Accept': '*/*',
+      'Authorization': `Bearer ${printfulApi.value()}`,
+      'Content-Type': 'application/json',
+   };
+
+   const Body = {
+      recipient: {
+         name: req.body.name,
+         address1: req.body.address1,
+         city: req.body.city,
+         state_code: req.body.state_code,
+         country_code: req.body.country_code,
+         zip: req.body.zip,
+      },
+      items: req.body.items,
+   };
+
+   console.log(Body);
+   await fetch(`https://api.printful.com/orders`, {
+      method: 'POST',
+      headers: headersList,
+   })
+      .then((resp) => {
+         if (resp.status >= 200 && resp.status <= 300) {
+            return Promise.resolve(resp.json());
+         }
+      })
+      .then((data) => {
+         res.json(data);
+      });
 });
