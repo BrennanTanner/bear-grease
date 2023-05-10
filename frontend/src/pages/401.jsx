@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
-export default function Error() {
+export default function Error401() {
   return (
     <Box
       sx={{

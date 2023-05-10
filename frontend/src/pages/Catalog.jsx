@@ -1,18 +1,36 @@
+import React, { useState, useCallback, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+   Button,
+   CssBaseline,
+   Container,
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Navbar, ItemCard, Copyright } from '../components/index';
+
+
+const theme = createTheme();
 
 export default function Catalog() {
-   const CatalogItems = useLoaderData();
-
-   console.log(CatalogItems);
+   const navigate = useNavigate();
+   const [isLoading, setIsLoading] = useState(false);
+   const {data, links} = useLoaderData();
 
    return (
-      <main>
-         {CatalogItems?.map((item) => {
+      <ThemeProvider theme={theme}>
+         <Navbar/>
+         <Container component='main'>
+            <CssBaseline />
+ <main>
+         {data?.map((item) => {
             return (
-               <h1>{item.title}</h1>
+               <ItemCard key={item.id} item={item}/>
             );
          })}
       </main>
+            <Copyright sx={{ mt: 5 }} />
+         </Container>
+      </ThemeProvider>
    );
 }

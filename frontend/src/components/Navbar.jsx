@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import {
    AppBar,
@@ -18,6 +19,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
 import { Cart } from '../components/index';
+import { onAuthStateChanged } from 'firebase/auth';
+import { authenticator } from '../services/firebase';
 
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
@@ -65,8 +68,13 @@ const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
+   const auth = authenticator;
+   const navigate = useNavigate();
+
    const [anchorElNav, setAnchorElNav] = React.useState(null);
    const [anchorElUser, setAnchorElUser] = React.useState(null);
+   const [isloggedIn, setIsloggedIn] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
 
    const handleOpenNavMenu = (event) => {
       setAnchorElNav(event.currentTarget);
@@ -82,6 +90,28 @@ function ResponsiveAppBar() {
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
    };
+
+   useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+         if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+            setIsloggedIn('true');
+            // ...
+         } else {
+            console.log('user is signed out ');
+            // User is signed out
+            // ...
+         }
+      });
+   }, [navigate]);
+
+   const handlelogout = useCallback(async () => {
+      setIsLoading(true);
+      await auth.signOut();
+      navigate(0);
+   }, [navigate]);
 
    return (
       <AppBar position='static'>
@@ -194,17 +224,35 @@ function ResponsiveAppBar() {
                   ))}
                </Box>
                <Box sx={{ flexGrow: 0 }}>
-                  <Cart />
+                  <Cart  />
                </Box>
                <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title='Open settings'>
-                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar
-                           alt='Remy Sharp'
-                           src='/static/images/avatar/2.jpg'
-                        />
-                     </IconButton>
-                  </Tooltip>
+                  {!isloggedIn && (
+                     <Button href='/login' variant='body2'>
+                        Login
+                     </Button>
+                  )}
+                  {!isloggedIn && (
+                     <Button href='/login' variant='body2'>
+                        Sign up
+                     </Button>
+                  )}
+
+                  {isloggedIn && (
+                     <Button onClick={handlelogout} variant='body2'>
+                        Logout
+                     </Button>
+                  )}
+                  {isloggedIn && (
+                     <Tooltip title='Open settings'>
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                           <Avatar
+                              alt='Remy Sharp'
+                              src='/static/images/avatar/2.jpg'
+                           />
+                        </IconButton>
+                     </Tooltip>
+                  )}
                   <Menu
                      sx={{ mt: '45px' }}
                      id='menu-appbar'

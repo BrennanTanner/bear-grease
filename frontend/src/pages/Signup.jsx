@@ -21,24 +21,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { onAuthStateChanged, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { authenticator } from '../services/firebase';
+import { Copyright } from '../components/index';
 
-function Copyright(props) {
-   return (
-      <Typography
-         variant='body2'
-         color='text.secondary'
-         align='center'
-         {...props}
-      >
-         {'Copyright © '}
-         <Link color='inherit' href='https://mui.com/'>
-            Bear Grease
-         </Link>{' '}
-         {new Date().getFullYear()}
-         {'.'}
-      </Typography>
-   );
-}
 
 const theme = createTheme();
 
