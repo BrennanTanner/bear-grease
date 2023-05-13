@@ -4,9 +4,10 @@ import {
    useRouteError, 
    isRouteErrorResponse
 } from 'react-router-dom';
-import {Login, Signup, Home, Catalog, Page404, Item} from './pages/index'
+import {Login, Signup, Home, Catalog, Page404, Item, Checkout} from './pages/index'
 import { getCatalog, getItem } from './services/printify';
 import './App.css';
+
 
 const router = createBrowserRouter([
    {
@@ -37,8 +38,8 @@ const router = createBrowserRouter([
       errorElement: <ErrorBoundary/>,
    },
    {
-      path: '/signup/*',
-      element: <Signup/>,
+      path: '/checkout',
+      element: <Checkout/>,
       errorElement: <ErrorBoundary/>,
    },
    {

@@ -120,8 +120,8 @@ export default function Login() {
 
    return (
       <ThemeProvider theme={theme}>
+         <CssBaseline />
          <Container component='main' maxWidth='xs' sx={{  display: 'flex', flexDirection: 'column'}}>
-            <CssBaseline />
             <Box
                sx={{
                   marginTop: 8,

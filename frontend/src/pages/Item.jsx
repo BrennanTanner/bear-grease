@@ -208,9 +208,9 @@ export default function Item() {
 
    return (
       <ThemeProvider theme={theme}>
+         <CssBaseline />
          <Navbar key={navBar}/>
          <Container component='main'>
-            <CssBaseline />
             <Card sx={{ maxWidth: '100%' }}>
                <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
                   <Grid item xs={12} sm={6}>

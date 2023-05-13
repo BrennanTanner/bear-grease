@@ -19,16 +19,15 @@ export default function Catalog() {
 
    return (
       <ThemeProvider theme={theme}>
+         <CssBaseline />
          <Navbar/>
          <Container component='main'>
-            <CssBaseline />
- <main>
+
          {data?.map((item) => {
             return (
                <ItemCard key={item.id} item={item}/>
             );
          })}
-      </main>
             <Copyright sx={{ mt: 5 }} />
          </Container>
       </ThemeProvider>
