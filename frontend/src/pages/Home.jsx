@@ -10,18 +10,22 @@ import {
    ImageListItem,
    Card,
    CardMedia,
+   CardActionArea,
+   CardContent,
    Container,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import Carousel from 'react-material-ui-carousel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Navbar, Copyright } from '../components/index';
 import ProductHero from '../components/Hero';
+import { getCategories, getHomeImages } from '../util/itemSort';
 
 const theme = createTheme();
 
 export default function Home() {
    const navigate = useNavigate();
-   const data = useLoaderData();
+   const data = getHomeImages();
    const [isLoading, setIsLoading] = useState(false);
    const imageArray = [
       'https://i.imgur.com/RjSJNgr.png',
@@ -34,14 +38,119 @@ export default function Home() {
       <ThemeProvider theme={theme}>
          <CssBaseline />
          <Navbar />
-         
+
          <Container component='main'>
-            <ImageList
-               sx={{ width: '100%' }}
-               variant='quilted'
-               cols={3}
-               rowHeight={121}
-            >
+            {/* <Grid container spacing={2}>
+               <Grid xs={12}>
+                  <ProductHero />
+               </Grid>
+               <Grid xs={12} sm={6} md={8}>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea>
+                        <CardMedia
+                           component='img'
+                           height='140'
+                           image='/static/images/cards/contemplative-reptile.jpg'
+                           alt='green iguana'
+                        />
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
+               </Grid>
+               <Grid xs={6} md={4}>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea>
+                        <CardMedia
+                           component='img'
+                           height='140'
+                           image='/static/images/cards/contemplative-reptile.jpg'
+                           alt='green iguana'
+                        />
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
+               </Grid>
+               <Grid xs={6} md={4}>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea>
+                        <CardMedia
+                           component='img'
+                           height='140'
+                           image='/static/images/cards/contemplative-reptile.jpg'
+                           alt='green iguana'
+                        />
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
+               </Grid>
+               <Grid xs={6} md={8}>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea>
+                        <CardMedia
+                           component='img'
+                           height='140'
+                           image='/static/images/cards/contemplative-reptile.jpg'
+                           alt='green iguana'
+                        />
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
+               </Grid>
+            </Grid> */}
+
+            <ImageList sx={{ width: '100%' }} variant='quilted' cols={3}>
                {/* {itemData.map((item) => (
                   <ImageListItem
                      key={item.img}
@@ -55,20 +164,132 @@ export default function Home() {
                      />
                   </ImageListItem>
                ))} */}
-               <ImageListItem cols={3} rows={3}>
-               <ProductHero />
+               <ImageListItem cols={3} rows={5}>
+                  <ProductHero />
                </ImageListItem>
                <ImageListItem cols={1} rows={1}>
-                  <Card>item 2</Card>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea
+                        sx={{
+                           height: '100%',
+                           width: '100%',
+                           backgroundImage:
+                              "url('https://images-api.printify.com/mockup/645876fea960d4aeda09b947/12100/92662/creepy-bear-t.jpg?camera_label=lifestyle')",
+                           backgroundPosition: 'center',
+                           backgroundPositionY: '0',
+                           backgroundSize: 'cover',
+                           backgroundRepeat: 'no-repeat',
+                        }}
+                     >
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
                </ImageListItem>
                <ImageListItem cols={1} rows={1}>
-                  <Card>item 3</Card>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea
+                        sx={{
+                           height: '100%',
+                           width: '100%',
+                           backgroundImage:
+                              "url('https://images-api.printify.com/mockup/645876fea960d4aeda09b947/12100/92662/creepy-bear-t.jpg?camera_label=lifestyle')",
+                           backgroundPosition: 'center',
+                           backgroundPositionY: '0',
+                           backgroundSize: 'cover',
+                           backgroundRepeat: 'no-repeat',
+                        }}
+                     >
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
                </ImageListItem>
                <ImageListItem cols={1} rows={2}>
-                  <Card>item 4</Card>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea
+                        sx={{
+                           height: '100%',
+                           width: '100%',
+                           backgroundImage:
+                              "url('https://images-api.printify.com/mockup/645876fea960d4aeda09b947/12100/92662/creepy-bear-t.jpg?camera_label=lifestyle')",
+                           backgroundPosition: 'center',
+                           backgroundPositionY: '0',
+                           backgroundSize: 'cover',
+                           backgroundRepeat: 'no-repeat',
+                        }}
+                     >
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarcticamjmmm
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
                </ImageListItem>
                <ImageListItem cols={2} rows={1}>
-                  <Card>item 5</Card>
+                  <Card sx={{ height: '100%', width: '100%' }}>
+                     <CardActionArea
+                        sx={{
+                           height: '100%',
+                           width: '100%',
+                           backgroundImage:
+                              "url('https://images-api.printify.com/mockup/645876fea960d4aeda09b947/12100/92662/creepy-bear-t.jpg?camera_label=lifestyle')",
+                           backgroundPosition: 'center',
+                           backgroundPositionY: '0',
+                           backgroundSize: 'cover',
+                           backgroundRepeat: 'no-repeat',
+                        }}
+                     >
+                        <CardContent>
+                           <Typography
+                              gutterBottom
+                              variant='h5'
+                              component='div'
+                           >
+                              Lizard
+                           </Typography>
+                           <Typography variant='body2' color='text.secondary'>
+                              Lizards are a widespread group of squamate
+                              reptiles, with over 6,000 species, ranging across
+                              all continents except Antarctica
+                           </Typography>
+                        </CardContent>
+                     </CardActionArea>
+                  </Card>
                </ImageListItem>
             </ImageList>
 
@@ -81,9 +302,9 @@ export default function Home() {
 
             <Box>
                <Carousel autoPlay={false} animation='slide'>
-                  {data?.map((item) => {
+                  {/* {data?.map((item) => {
                      return <ItemCard item={item.info} />;
-                  })}
+                  })} */}
                </Carousel>
             </Box>
 

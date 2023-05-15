@@ -30,7 +30,6 @@ import { addToCart } from '../util/cart';
 const theme = createTheme();
 
 export default function Item() {
-
    const { title, id, description, images, variants, tags, options } =
       useLoaderData();
 
@@ -81,6 +80,9 @@ export default function Item() {
          getCategoryIndex('Size')
       ]
    );
+   const [price, setPrice] = useState('');
+   const [oldPrice, setOldPrice] = useState('');
+   const [discount, setDiscount] = useState('');
    const [imageArray, setImageArray] = useState([{ src: 'na', title: 'none' }]);
    const [sizeArray, setSizeArray] = useState(getCategoryArray('Size'));
    const [colorArray, setColorArray] = useState(getCategoryArray('Color'));
@@ -157,32 +159,58 @@ export default function Item() {
          variant.options.includes(selectedColor)
       );
 
+      const colorImages = images.filter((image) =>
+         colorVariants.some((variant) => image.variant_ids.includes(variant.id))
+      );
+      let size = selectedSize - 13;
+
+      const peopleImgs = colorImages.filter(
+         (image) =>
+            image.src.split('=')[1].split('-')[0] == 'person' &&
+            !image.src.split('=')[1].split('-')[2]
+      ).length;
+
+      if (selectedSize == 2104) {
+         size = Math.floor(Math.random() * peopleImgs) + 1;
+      }
+
+      if (size > peopleImgs) {
+         size = peopleImgs;
+      }
       setImageArray(
-         images.filter((image) => {
-            if (
-               colorVariants.some((variant) =>
-                  image.variant_ids.includes(variant.id)
-               )
-            ) {
+         colorImages.filter((image) => {
+            const tags = image.src.split('=')[1].split('-');
+            if (tags[0] != 'person') {
+               return image;
+            } else if (tags[1] == size) {
                return image;
             }
          })
       );
-   }, [selectedColor]);
+   }, [selectedColor, selectedSize]);
 
    // USD formatting options
-   let formatting_options = {
+   const formatting_options = {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
    };
 
-   // covert price to readable USD
-   const price = (
-      enabledVariants.filter((variant) => {
-         if (variant.is_default) return variant;
-      })[0].price / 100
-   ).toLocaleString('en-US', formatting_options);
+   useEffect(() => {
+      //when selection is changed, get price and convert to readable US format.
+      const variant = enabledVariants.filter(
+         (variant) =>
+            variant.options.includes(selectedColor) &&
+            variant.options.includes(selectedSize)
+      )[0];
+      setPrice(
+         (variant.price / 100).toLocaleString('en-US', formatting_options)
+      );
+      setOldPrice(
+         ((variant.cost /(1 - 0.40)) / 100).toLocaleString('en-US', formatting_options)
+      );
+      setDiscount(Math.round(100 - (variant.price/(variant.cost /(1 - 0.40)) * 100)));
+   }, [selectedColor, selectedSize]);
 
    const addToCartHandler = useCallback(() => {
       const sizeVariants = enabledVariants.filter((variant) =>
@@ -205,11 +233,10 @@ export default function Item() {
       setNavBar(navBar + 1);
    }, [selectedColor, selectedSize, imageArray, navBar]);
 
-
    return (
       <ThemeProvider theme={theme}>
          <CssBaseline />
-         <Navbar key={navBar}/>
+         <Navbar key={navBar} />
          <Container component='main'>
             <Card sx={{ maxWidth: '100%' }}>
                <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
@@ -235,8 +262,10 @@ export default function Item() {
                         <Typography gutterBottom variant='body' component='div'>
                            {description}
                         </Typography>
+                        {discount > 1 && <Typography variant='body' sx={{ fontStyle: 'italic', textDecoration: 'line-through' }} color='gray'>{oldPrice}</Typography>}
+                        {discount > 1 && <Typography variant='h5' color='secondary'>{discount + '%'}</Typography>}
                         <Typography variant='h5' color='secondary'>
-                           {price}
+                           {price} 
                         </Typography>
                         <Divider variant='middle' />
                         <Typography gutterBottom variant='h5' component='div'>

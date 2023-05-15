@@ -39,7 +39,6 @@ function Cart() {
       changeItemQuantity(item, quantity);
    }, []);
 
-   console.log(items);
    const getList = () => (
       <Container style={{ width: '100%' }}>
          <Typography variant='h4'>My Cart</Typography>

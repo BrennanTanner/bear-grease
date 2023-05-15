@@ -27,7 +27,7 @@ export default function MultiActionAreaCard({ item }) {
      }, [item]);
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: '345px', height: '485px' }}>
       <CardActionArea onClick={clickHandler}>
         <CardMedia
           component="img"
@@ -39,7 +39,7 @@ export default function MultiActionAreaCard({ item }) {
           <Typography gutterBottom variant="h5" component="div">
           {item.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="h5" color="secondary">
           {item.price}
           </Typography>
         </CardContent>
