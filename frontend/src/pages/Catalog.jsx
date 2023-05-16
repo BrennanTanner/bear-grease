@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Button, CssBaseline, Container, Grid } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Navbar, ItemCard, Copyright } from '../components/index';
+import { Navbar, ItemCard, Footer } from '../components/index';
 
 const theme = createTheme();
 
@@ -17,6 +17,7 @@ export default function Catalog() {
          <CssBaseline />
          <Navbar />
          <Container component='main'>
+         <Container sx={{ height: '50px' }}></Container>
             <Grid container spacing={2} direction={'row'}>
                {data?.map((item) => {
                   return (
@@ -27,8 +28,8 @@ export default function Catalog() {
                })}
             </Grid>
 
-            <Copyright sx={{ mt: 5 }} />
          </Container>
+         <Footer sx={{ mt: 5 }} disableGutters/>
       </ThemeProvider>
    );
 }

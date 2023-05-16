@@ -14,6 +14,7 @@ const router = createBrowserRouter([
       path: '/',
       element: <Home />,
       errorElement: <ErrorBoundary/>,
+      loader: getCatalog,
    },
    {
       path: '/catalog',

@@ -24,7 +24,7 @@ import {
 import Carousel from 'react-material-ui-carousel';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Navbar, Copyright } from '../components/index';
+import { Navbar, Footer } from '../components/index';
 import { addToCart } from '../util/cart';
 
 const theme = createTheme();
@@ -381,8 +381,8 @@ export default function Item() {
                   </Grid>
                </Grid>
             </Card>
-            <Copyright sx={{ mt: 5 }} />
          </Container>
+         <Footer sx={{ mt: 5 }} disableGutters/>
       </ThemeProvider>
    );
 }
