@@ -41,7 +41,7 @@ export default function SignUp() {
    useEffect(() => {
       onAuthStateChanged(auth, (user) => {
          if (user) {
-            navigate('/home');
+            navigate('/');
          }
       });
    }, [navigate]);

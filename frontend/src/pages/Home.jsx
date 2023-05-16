@@ -25,8 +25,6 @@ const theme = createTheme();
 export default function Home() {
    const navigate = useNavigate();
    const { data, links } = useLoaderData();
-
-   console.log(data);
    const [isLoading, setIsLoading] = useState(false);
 
    return (
@@ -36,12 +34,14 @@ export default function Home() {
 
          <Container component='main'>
             <Container sx={{ height: '50px' }}></Container>
-            <ImageList sx={{ width: '100%', }} variant='quilted' cols={3} >
+            <ImageList sx={{ width: '100%' }} variant='quilted' cols={3}>
                <ImageListItem cols={3} rows={5}>
                   <Hero />
                </ImageListItem>
-               <ImageListItem  sx={{ margin: '5px' }} cols={1} rows={1}>
-                  <Card sx={{ height: '100%', width: '100%', borderRadius:'0' }}>
+               <ImageListItem sx={{ margin: '5px' }} cols={1} rows={1}>
+                  <Card
+                     sx={{ height: '100%', width: '100%', borderRadius: '0' }}
+                  >
                      <CardActionArea
                         sx={{
                            height: '100%',
@@ -52,52 +52,46 @@ export default function Home() {
                            backgroundPositionY: '10',
                            backgroundSize: 'fit',
                            backgroundRepeat: 'no-repeat',
-
                         }}
                      >
                         <CardContent>
-                        <Container sx={{ height: '150px' }}></Container>
+                           <Container sx={{ height: '150px' }}></Container>
                         </CardContent>
-                        <Typography
-                              gutterBottom
-                              variant='h3'
-                              component='div'
-                           >
-                              Men's Clothing
-                           </Typography>
+                        <Typography gutterBottom variant='h3' component='div'>
+                           Men's Clothing
+                        </Typography>
                      </CardActionArea>
                   </Card>
                </ImageListItem>
-               <ImageListItem  sx={{ margin: '5px' }} cols={1} rows={1}>
-                  <Card sx={{ height: '100%', width: '100%', borderRadius:'0' }}>
+               <ImageListItem sx={{ margin: '5px' }} cols={1} rows={1}>
+                  <Card
+                     sx={{ height: '100%', width: '100%', borderRadius: '0' }}
+                  >
                      <CardActionArea
                         sx={{
                            height: '100%',
                            width: '100%',
                            backgroundImage:
                               "url('https://images.unsplash.com/photo-1591035897819-f4bdf739f446?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=520&q=80')",
-                              backgroundPosition: 'top',
-                              backgroundPositionY: '10',
-                              backgroundSize: 'fit',
+                           backgroundPosition: 'top',
+                           backgroundPositionY: '10',
+                           backgroundSize: 'fit',
                            backgroundRepeat: 'no-repeat',
                         }}
-                     ><Typography
-                     gutterBottom
-                     variant='h3'
-                     component='div'
-                  >
-                     Women's Clothing
-                  </Typography>
+                     >
+                        <Typography gutterBottom variant='h3' component='div'>
+                           Women's Clothing
+                        </Typography>
                         <CardContent>
-                           
-
                            <Container sx={{ height: '100px' }}></Container>
                         </CardContent>
                      </CardActionArea>
                   </Card>
                </ImageListItem>
-               <ImageListItem sx={{ margin: '5px'}} cols={1} rows={2}>
-                  <Card sx={{ height: '100%', width: '100%', borderRadius:'0' }}>
+               <ImageListItem sx={{ margin: '5px' }} cols={1} rows={2}>
+                  <Card
+                     sx={{ height: '100%', width: '100%', borderRadius: '0' }}
+                  >
                      <CardActionArea
                         sx={{
                            height: '100%',
@@ -110,53 +104,51 @@ export default function Home() {
                            backgroundRepeat: 'no-repeat',
                         }}
                      >
-                                          <Typography
-                              gutterBottom
-                              variant='h3'
-                              component='div'
-                              
-                           >
-                              Accessories
-                           </Typography>
+                        <Typography gutterBottom variant='h3' component='div'>
+                           Accessories
+                        </Typography>
                         <CardContent>
-                        <Container sx={{ height: '350px' }}></Container>
+                           <Container sx={{ height: '350px' }}></Container>
                         </CardContent>
                      </CardActionArea>
                   </Card>
                </ImageListItem>
-               <ImageListItem sx={{ margin: '5px' }}cols={2} rows={1}>
-                  <Card sx={{ height: '100%', width: '100%', borderRadius:'0' }}>
+               <ImageListItem sx={{ margin: '5px' }} cols={2} rows={1}>
+                  <Card
+                     sx={{ height: '100%', width: '100%', borderRadius: '0' }}
+                  >
                      <CardActionArea
                         sx={{
                            height: '100%',
                            width: '100%',
                            backgroundImage:
                               "url('https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=820&q=80')",
-                              backgroundPosition: 'center',
-                              backgroundPositionY: '10',
-                              backgroundPositionX: '10',
-                              backgroundSize: 'cover',
-                              backgroundRepeat: 'no-repeat',
-                           }}
-                        >
-                           <CardContent>
+                           backgroundPosition: 'center',
+                           backgroundPositionY: '10',
+                           backgroundPositionX: '10',
+                           backgroundSize: 'cover',
+                           backgroundRepeat: 'no-repeat',
+                        }}
+                     >
+                        <CardContent>
                            <Container sx={{ height: '150px' }}></Container>
-                           </CardContent>
-                           <Typography
-                                 gutterBottom
-                                 variant='h3'
-                                 component='div'
-                                 color='white'
-                              >
-                                 Best Sellers
-                              </Typography>
+                        </CardContent>
+                        <Typography
+                           gutterBottom
+                           variant='h3'
+                           component='div'
+                           color='white'
+                        >
+                           Best Sellers
+                        </Typography>
                      </CardActionArea>
                   </Card>
                </ImageListItem>
             </ImageList>
-
+            <Typography variant='h3' component='div'>
+               New Arrivals
+            </Typography>
             <Carousel autoPlay={false} animation='slide'>
-
                {data?.map((item) => {
                   return (
                      <ItemCard
@@ -169,7 +161,6 @@ export default function Home() {
                      />
                   );
                })}
-              
             </Carousel>
             <Box>
                <Typography>
@@ -185,10 +176,8 @@ export default function Home() {
                   })} */}
                </Carousel>
             </Box>
-
-            
          </Container>
-         <Footer sx={{ mt: 5 }} disableGutters/>
+         <Footer sx={{ mt: 5 }} disableGutters />
       </ThemeProvider>
    );
 }

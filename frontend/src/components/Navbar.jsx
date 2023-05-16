@@ -64,8 +64,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
    },
 }));
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Catalog', '🚧Blog🚧'];
+const settings = ['🚧Account🚧', 'Logout'];
 
 function ResponsiveAppBar() {
    const auth = authenticator;
@@ -74,6 +74,7 @@ function ResponsiveAppBar() {
    const [anchorElNav, setAnchorElNav] = React.useState(null);
    const [anchorElUser, setAnchorElUser] = React.useState(null);
    const [isloggedIn, setIsloggedIn] = useState(false);
+   const [user, setUser] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
 
    const handleOpenNavMenu = (event) => {
@@ -97,6 +98,7 @@ function ResponsiveAppBar() {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
             const uid = user.uid;
+            setUser(user);
             setIsloggedIn('true');
             // ...
          } else {
@@ -114,7 +116,7 @@ function ResponsiveAppBar() {
    }, [navigate]);
 
    return (
-      <AppBar position='fixed' >
+      <AppBar position='fixed'>
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                <PetsIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -174,11 +176,27 @@ function ResponsiveAppBar() {
                            inputProps={{ 'aria-label': 'search' }}
                         />
                      </Search>
-                     {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                           <Typography textAlign='center'>{page}</Typography>
-                        </MenuItem>
-                     ))}
+
+                     <MenuItem onClick={handleCloseNavMenu}>
+                        <Button
+                           onClick={() => {
+                              navigate('/catalog');
+                           }}
+                           variant='body2'
+                        >
+                           Catalog
+                        </Button>
+                     </MenuItem>
+                     <MenuItem onClick={handleCloseNavMenu}>
+                        <Button
+                           onClick={() => {
+                              navigate('/');
+                           }}
+                           variant='body2'
+                        >
+                           🚧About Us🚧
+                        </Button>
+                     </MenuItem>
                   </Menu>
                </Box>
                <PetsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -213,18 +231,23 @@ function ResponsiveAppBar() {
                   />
                </Search>
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                  {pages.map((page) => (
-                     <Button
-                        key={page}
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                     >
-                        {page}
-                     </Button>
-                  ))}
+                  <MenuItem
+                     onClick={() => {
+                        navigate('/catalog');
+                     }}
+                  >
+                     Catalog
+                  </MenuItem>
+                  <MenuItem
+                     onClick={() => {
+                        navigate('/');
+                     }}
+                  >
+                     🚧About Us🚧
+                  </MenuItem>
                </Box>
                <Box sx={{ flexGrow: 0 }}>
-                  <Cart  />
+                  <Cart />
                </Box>
                <Box sx={{ flexGrow: 0 }}>
                   {!isloggedIn && (
@@ -237,19 +260,10 @@ function ResponsiveAppBar() {
                         Sign up
                      </Button>
                   )}
-
-                  {isloggedIn && (
-                     <Button onClick={handlelogout} variant='body2'>
-                        Logout
-                     </Button>
-                  )}
                   {isloggedIn && (
                      <Tooltip title='Open settings'>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                           <Avatar
-                              alt='Remy Sharp'
-                              src='/static/images/avatar/2.jpg'
-                           />
+                           <Avatar alt='Remy Sharp' src={user.photoURL} />
                         </IconButton>
                      </Tooltip>
                   )}
@@ -269,11 +283,20 @@ function ResponsiveAppBar() {
                      open={Boolean(anchorElUser)}
                      onClose={handleCloseUserMenu}
                   >
-                     {settings.map((setting) => (
-                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                           <Typography textAlign='center'>{setting}</Typography>
-                        </MenuItem>
-                     ))}
+                     <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>
+                           {' '}
+                           {user.displayName}
+                        </Typography>
+                     </MenuItem>
+                     <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'> 🚧Account🚧</Typography>
+                     </MenuItem>
+                     <MenuItem onClick={handleCloseUserMenu}>
+                        <Button onClick={handlelogout} variant='body2'>
+                           Logout
+                        </Button>
+                     </MenuItem>
                   </Menu>
                </Box>
             </Toolbar>
